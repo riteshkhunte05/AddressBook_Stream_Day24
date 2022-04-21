@@ -2,6 +2,7 @@ package addressBookStream_Day24;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class Add_Book_Main {
 	
@@ -9,22 +10,20 @@ public class Add_Book_Main {
 	Scanner sc = new Scanner(System.in);
 	private static int numberOfConatcts = 0;
 
-	public Add_Book_Main() {
-	
-	}
-
 	public void addContacts() {
 		System.out.println("Enter Person details:");
 
-		PersonContact person = details();
-		boolean isDuplicate = contactBook.stream().anyMatch(contact -> contact.equals(person));
+		PersonContact per = details();
+		boolean isDuplicate = contactBook.stream().anyMatch(contact -> contact.equals(per));
 		if (isDuplicate) {
 			System.out.println("Duplicate data entry. discarded");
 		} else {
-			contactBook.add(person);
+			contactBook.add(per);
 		}
+
 	}
 
+	@SuppressWarnings("unused")
 	public void edit() {
 		System.out.println("enter the name to edit contact details");
 		String name = sc.next();
@@ -35,47 +34,50 @@ public class Add_Book_Main {
 		for (index = 0; index < numberOfConatcts; index++)
 			if (name.equals(contactBook.get(index).getFirstName())) {
 				System.out.println("name exists , now enter the new details");
-				switch (choice) {
-				case 1:
-					System.out.println("Enter new First Name");
-					String newFirstName = sc.next();
-					contactBook.get(index).setFirstName(newFirstName);
-					break;
-				case 2:
-					System.out.println("Enter new Last Name");
-					String newLastName = sc.next();
-					contactBook.get(index).setLastName(newLastName);
-					break;
-				case 3:
-					System.out.println("Enter new City");
-					String newCity = sc.next();
-					contactBook.get(index).setCity(newCity);
-					break;
-				case 4:
-					System.out.println("Enter new State");
-					String newState = sc.next();
-					contactBook.get(index).setState(newState);
-					break;
-				case 5:
-					System.out.println("Enter new State");
-					int newZip = sc.nextInt();
-					contactBook.get(index).setZip(newZip);
-					break;
-				case 6:
-					System.out.println("Enter new Phone Number");
-					int newPNumber = sc.nextInt();
-					contactBook.get(index).setPhoneNumber(newPNumber);
-					break;
-				case 7:
-					System.out.println("Enter new Email");
-					String newEmail = sc.next();
-					contactBook.get(index).setEmail(newEmail);
-					break;
-				}
 
+				break;
 			} else {
 				System.out.println("No contact found");
+				return;
 			}
+		switch (choice) {
+		case 1:
+			System.out.println("Enter new First Name");
+			String newFirstName = sc.next();
+			contactBook.get(index).setFirstName(newFirstName);
+			break;
+		case 2:
+			System.out.println("Enter new Last Name");
+			String newLastName = sc.next();
+			contactBook.get(index).setLastName(newLastName);
+			break;
+		case 3:
+			System.out.println("Enter new City");
+			String newCity = sc.next();
+			contactBook.get(index).setCity(newCity);
+			break;
+		case 4:
+			System.out.println("Enter new State");
+			String newState = sc.next();
+			contactBook.get(index).setState(newState);
+			break;
+		case 5:
+			System.out.println("Enter new State");
+			int newZip = sc.nextInt();
+			contactBook.get(index).setZip(newZip);
+			break;
+		case 6:
+			System.out.println("Enter new Phone Number");
+			long newPNumber = sc.nextLong();
+			contactBook.get(index).setPhoneNumber(newPNumber);
+			break;
+		case 7:
+			System.out.println("Enter new Email");
+			String newEmail = sc.next();
+			contactBook.get(index).setEmail(newEmail);
+			break;
+		}
+
 	}
 
 	public void delete() {
@@ -121,14 +123,36 @@ public class Add_Book_Main {
 			person1.setCity(sc.next());
 			System.out.println("Enter State:");
 			person1.setState(sc.next());
+			System.out.println("Enter email:");
+			person1.setEmail(sc.next());
 			System.out.println("Enter Pin code:");
 			person1.setZip(sc.nextInt());
 			System.out.println("Enter Phone number:");
-			person1.setPhoneNumber(sc.nextInt());
-			System.out.println("Enter email:");
-			person1.setEmail(sc.next());
+			person1.setPhoneNumber(sc.nextLong());
 			return person1;
 		}
+	}
+
+	public void searchByCity1(String city) {
+		Predicate<PersonContact> searchPerson = (contact -> contact.getCity().equals(city));
+		contactBook.stream().filter(searchPerson).forEach(person -> output(person));
+	}
+
+	public void searchByState(String state) {
+		Predicate<PersonContact> searchPerson = (contact -> contact.getState().equals(state));
+		contactBook.stream().filter(searchPerson).forEach(person -> output(person));
+	}
+
+	private static void output(PersonContact person) {
+		System.out.println("firstName : " + person.getFirstName());
+		System.out.println("SecondName : " + person.getLastName());
+		System.out.println("Address : " + person.getAddress());
+		System.out.println("City : " + person.getCity());
+		System.out.println("State : " + person.getState());
+		System.out.println("Pin code : " + person.getZip());
+		System.out.println("Phone number : " + person.getPhoneNumber());
+		System.out.println("email : " + person.getEmail());
+		System.out.println();
 	}
 
 }
