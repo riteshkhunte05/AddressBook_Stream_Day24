@@ -1,7 +1,7 @@
 package addressBookStream_Day24;
 
 public class PersonContact {
-	 private String firstName;
+	  private String firstName;
 	    private String lastName;
 	    private String address;
 	    private String city;
@@ -91,4 +91,5 @@ public class PersonContact {
 
 	    protected void remove(PersonContact contacts) {
 
-	    }}
+	    }
+	}
