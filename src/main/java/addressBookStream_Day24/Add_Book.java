@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Add_Book {
 
-
     static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -24,4 +23,4 @@ public class Add_Book {
             i++;
         }
         System.out.println(map);
-    }}
+    }}  
